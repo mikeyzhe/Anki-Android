@@ -1090,12 +1090,50 @@ public class Reviewer extends AnkiActivity {
         }
     }
 
+    public static final int SPACE=62;
+    public static final int LEFT_SIGN =77;
+    public static final int RIGHT_SPACE = 56;
+    public static final int RIGHT_2 =1000;
+
+    private void keyBoardClick(View ...views){
+        for (View view : views) {
+            if(view.getVisibility()==View.VISIBLE){
+                view.performClick();
+                break;
+            }
+        }
+    }
+
+    public boolean checkKey(int keyCode, KeyEvent event) {
+        Log.d("CAP.EXT","KeyCode is "+keyCode);
+        switch (keyCode){
+            case SPACE:
+                keyBoardClick(mFlipCardLayout,mEase2Layout);
+                break;
+            case LEFT_SIGN:
+                keyBoardClick(mEase1Layout);
+                break;
+            case RIGHT_SPACE:
+                keyBoardClick(mEase3Layout);
+                break;
+            case RIGHT_2:
+                keyBoardClick(mEase4Layout);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
             closeReviewer(RESULT_DEFAULT, false);
+            return true;
+        }
+        // added by YHe
+        if(checkKey(keyCode,event)){
             return true;
         }
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
